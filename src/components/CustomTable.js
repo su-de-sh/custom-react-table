@@ -1,5 +1,6 @@
 import React from "react";
 import "./CustomTable.css";
+import { Icon } from "@iconify/react";
 
 const CustomTable = ({ column, data }) => {
   return (
@@ -27,10 +28,7 @@ const CustomTable = ({ column, data }) => {
                       }}
                     >
                       {item.title}
-                      <iconify-icon
-                        icon="mdi:sort-ascending"
-                        width="20"
-                      ></iconify-icon>
+                      <Icon icon="mdi:sort-ascending" width="20" />
                     </div>
                   </th>
                 );
@@ -52,10 +50,7 @@ const CustomTable = ({ column, data }) => {
                 } else if (col.indexTitle === "delete") {
                   return (
                     <td key={col.id}>
-                      <iconify-icon
-                        icon="ic:outline-delete-outline"
-                        width="28"
-                      ></iconify-icon>
+                      <Icon icon="ic:outline-delete-outline" width="28" />
                     </td>
                   );
                 } else {
