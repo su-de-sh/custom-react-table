@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
 
 const CustomTable = ({ column, data }) => {
+  const [sort, setSort] = useState({ col: null, order: null });
+
+  const sortColumn = (col) => {
+    if (sort.col === col && sort.order === "asc") {
+      setSort({ col: col, order: "desc" });
+    } else if (sort.col === col && sort.order === "desc") {
+      setSort({ col: null, order: null });
+    } else {
+      setSort({ col: col, order: "asc" });
+    }
+  };
+  console.log(sort);
+
+  if (sort.col) {
+    // data = data.sort((a, b) => -1);
+
+    data = data.sort((a, b) => {
+      if (a[column[sort.col].indexTitle] < b[column[sort.col].indexTitle]) {
+        return sort.order === "asc" ? -1 : 1;
+      }
+      if (a[column[sort.col].indexTitle] > b[column[sort.col].indexTitle]) {
+        return sort.order === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
   return (
     <div>
       <table id="table">
@@ -28,7 +55,18 @@ const CustomTable = ({ column, data }) => {
                       }}
                     >
                       {item.title}
-                      <Icon icon="mdi:sort-ascending" width="20" />
+
+                      <Icon
+                        icon={
+                          sort.col === item.id
+                            ? sort.order === "asc"
+                              ? "mdi:sort-ascending"
+                              : "mdi:sort-descending"
+                            : "mdi:sort"
+                        }
+                        width={20}
+                        onClick={() => sortColumn(item.id)}
+                      />
                     </div>
                   </th>
                 );
