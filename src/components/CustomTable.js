@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 const CustomTable = ({ column, data }) => {
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
-  console.log(selectedRow, "selectedRow");
+
   const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
       setSort({ col: col, order: "desc" });
