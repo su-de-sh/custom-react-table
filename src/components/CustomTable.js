@@ -47,7 +47,7 @@ const CustomTable = ({ column, data }) => {
   return (
     <div>
       <table id="table">
-        <thead>
+        <thead style={{ position: "-webkit-sticky", top: -1 }}>
           <tr>
             {column.map((item) => {
               if (item.indexTitle === "select") {
