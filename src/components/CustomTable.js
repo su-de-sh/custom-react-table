@@ -4,7 +4,8 @@ import { Icon } from "@iconify/react";
 
 const CustomTable = ({ column, data }) => {
   const [sort, setSort] = useState({ col: null, order: null });
-
+  const [selectedRow, setSelectedRow] = useState([]);
+  console.log(selectedRow, "selectedRow");
   const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
       setSort({ col: col, order: "desc" });
@@ -12,6 +13,22 @@ const CustomTable = ({ column, data }) => {
       setSort({ col: null, order: null });
     } else {
       setSort({ col: col, order: "asc" });
+    }
+  };
+
+  const selectARow = (id) => {
+    if (selectedRow.includes(id)) {
+      setSelectedRow(selectedRow.filter((item) => item !== id));
+    } else {
+      setSelectedRow([...selectedRow, id]);
+    }
+  };
+
+  const selectAllRow = () => {
+    if (selectedRow.length === data.length) {
+      setSelectedRow([]);
+    } else {
+      setSelectedRow(data.map((item) => item.id));
     }
   };
 
@@ -36,7 +53,7 @@ const CustomTable = ({ column, data }) => {
               if (item.indexTitle === "select") {
                 return (
                   <th key={item.id}>
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={selectAllRow} />
                   </th>
                 );
               } else if (item.indexTitle === "delete") {
@@ -79,7 +96,13 @@ const CustomTable = ({ column, data }) => {
                   return (
                     <td key={col.id}>
                       {" "}
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        checked={selectedRow.includes(item.id) ? true : false}
+                        onChange={() => {
+                          selectARow(item.id);
+                        }}
+                      />
                     </td>
                   );
                 } else if (col.indexTitle === "delete") {
