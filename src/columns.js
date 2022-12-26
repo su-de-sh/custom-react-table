@@ -15,6 +15,7 @@ export const COLUMNS = [
     indexTitle: "last_name",
     id: 2,
   },
+
   {
     title: "Email",
     indexTitle: "email",
@@ -26,8 +27,8 @@ export const COLUMNS = [
     id: 4,
   },
   {
-    title: "Age",
-    indexTitle: "age",
+    title: "Job Title",
+    indexTitle: "job_title",
     id: 5,
   },
   {

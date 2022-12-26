@@ -14,11 +14,8 @@ const CustomTable = ({ column, data }) => {
       setSort({ col: col, order: "asc" });
     }
   };
-  console.log(sort);
 
   if (sort.col) {
-    // data = data.sort((a, b) => -1);
-
     data = data.sort((a, b) => {
       if (a[column[sort.col].indexTitle] < b[column[sort.col].indexTitle]) {
         return sort.order === "asc" ? -1 : 1;
