@@ -12,7 +12,7 @@ const CustomTable = ({ header, data }) => {
 
   useEffect(() => {
     if (sort.col) {
-      const sortedData = dataToDispaly.sort((a, b) => {
+      const sortedData = [...dataToDispaly].sort((a, b) => {
         if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
           return sort.order === "asc" ? -1 : 1;
         }
