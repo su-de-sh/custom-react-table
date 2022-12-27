@@ -41,6 +41,7 @@ const CustomTable = ({ header, data }) => {
         noOfDataToDisplay * pageNumber
       )
     );
+    // eslint-disable-next-line
   }, [pageNumber]);
 
   const sortColumn = (col) => {
@@ -114,8 +115,8 @@ const CustomTable = ({ header, data }) => {
                         icon={
                           sort.col === item.id
                             ? sort.order === "asc"
-                              ? "mdi:sort-ascending"
-                              : "mdi:sort-descending"
+                              ? "mdi:sort-descending"
+                              : "mdi:sort-ascending"
                             : "mdi:sort"
                         }
                         width={20}
@@ -153,6 +154,7 @@ const CustomTable = ({ header, data }) => {
                       <Icon
                         icon="ic:outline-delete-outline"
                         width="28"
+                        id="delete-icon"
                         onClick={() => handleDelete(item.id)}
                       />
                     </td>
@@ -162,6 +164,7 @@ const CustomTable = ({ header, data }) => {
                     <td
                       key={col.id}
                       onMouseOver={() => handleMouseOver(item.id, col.id)}
+                      onMouseOut={() => handleMouseOver(null, null)}
                     >
                       <div
                         style={{

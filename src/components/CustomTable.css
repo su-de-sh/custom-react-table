@@ -63,9 +63,18 @@ button {
 }
 
 #copy-icon {
-  margin-left: 10px;
+  color: #484747;
 }
 
 #copy-icon:hover {
+  cursor: pointer;
+}
+
+#delete-icon {
+  color: #484747;
+}
+
+#delete-icon:hover {
+  color: #f14d4d;
   cursor: pointer;
 }
