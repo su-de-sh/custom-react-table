@@ -11,18 +11,28 @@ const CustomTable = ({ header, data }) => {
 
   useEffect(() => {
     if (sort.col) {
-      const sortedData = [...data].sort((a, b) => {
-        if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
-          return sort.order === "asc" ? -1 : 1;
-        }
-        if (a[header[sort.col].indexTitle] > b[header[sort.col].indexTitle]) {
-          return sort.order === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
+      const sortedData = [...data]
+        .slice(
+          noOfDataToDisplay * (pageNumber - 1),
+          noOfDataToDisplay * pageNumber
+        )
+        .sort((a, b) => {
+          if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
+            return sort.order === "asc" ? -1 : 1;
+          }
+          if (a[header[sort.col].indexTitle] > b[header[sort.col].indexTitle]) {
+            return sort.order === "asc" ? 1 : -1;
+          }
+          return 0;
+        });
       setMyData(sortedData);
     } else {
-      setMyData(data);
+      setMyData(
+        data.slice(
+          noOfDataToDisplay * (pageNumber - 1),
+          noOfDataToDisplay * pageNumber
+        )
+      );
     }
     // eslint-disable-next-line
   }, [sort]);
@@ -36,7 +46,7 @@ const CustomTable = ({ header, data }) => {
     );
   }, [pageNumber]);
 
-  const sortheader = (col) => {
+  const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
       setSort({ col: col, order: "desc" });
     } else if (sort.col === col && sort.order === "desc") {
@@ -97,7 +107,7 @@ const CustomTable = ({ header, data }) => {
                             : "mdi:sort"
                         }
                         width={20}
-                        onClick={() => sortheader(item.id)}
+                        onClick={() => sortColumn(item.id)}
                       />
                     </div>
                   </th>
