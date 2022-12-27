@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
+import Pagination from "./Pagination";
 
 const CustomTable = ({ header, data }) => {
   const noOfDataToDisplay = 12;
@@ -10,6 +11,7 @@ const CustomTable = ({ header, data }) => {
   const [selectedRow, setSelectedRow] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [hoverLocation, setHoverLocation] = useState({ row: null, col: null });
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
     if (sort.col) {
@@ -112,6 +114,11 @@ const CustomTable = ({ header, data }) => {
                       {item.title}
 
                       <Icon
+                        id={
+                          sort.col && sort.col === item.id
+                            ? "sort-icon-active"
+                            : "sort-icon"
+                        }
                         icon={
                           sort.col === item.id
                             ? sort.order === "asc"
@@ -120,7 +127,9 @@ const CustomTable = ({ header, data }) => {
                             : "mdi:sort"
                         }
                         width={20}
-                        onClick={() => sortColumn(item.id)}
+                        onClick={() => {
+                          sortColumn(item.id);
+                        }}
                       />
                     </div>
                   </th>
@@ -179,7 +188,11 @@ const CustomTable = ({ header, data }) => {
                             <Icon
                               icon="material-symbols:file-copy"
                               width="24"
-                              id="copy-icon"
+                              id={
+                                isMouseDown ? "copy-icon-active" : "copy-icon"
+                              }
+                              onMouseDown={() => setIsMouseDown(true)}
+                              onMouseUp={() => setIsMouseDown(false)}
                               onClick={() => {
                                 navigator.clipboard.writeText(
                                   item[col.indexTitle]
@@ -196,37 +209,11 @@ const CustomTable = ({ header, data }) => {
           ))}
         </tbody>
       </table>
-      <div id="pagination">
-        <button
-          id={pageNumber === 1 ? "disabled-button" : "primary-button"}
-          onClick={() => {
-            if (pageNumber > 1) {
-              setPageNumber(pageNumber - 1);
-            }
-          }}
-          disabled={pageNumber === 1}
-        >
-          Prev
-        </button>
-        <span>
-          {pageNumber} of {Math.ceil(data.length / 16)}
-        </span>
-        <button
-          id={
-            pageNumber === Math.ceil(data.length / 16)
-              ? "disabled-button"
-              : "primary-button"
-          }
-          onClick={() => {
-            if (pageNumber < Math.ceil(data.length / 16)) {
-              setPageNumber(pageNumber + 1);
-            }
-          }}
-          disabled={pageNumber === Math.ceil(data.length / 16)}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        data={data}
+      />
     </div>
   );
 };

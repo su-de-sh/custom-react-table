@@ -41,17 +41,15 @@ button {
 }
 
 #primary-button {
-  background-color: #484747;
+  background-color: #050505;
   color: white;
-
   margin: 2px 2px 2px 2px;
   padding: 10px 20px;
   border-radius: 5px;
 }
 
 #primary-button:hover {
-  background-color: #050505;
-  color: white;
+  opacity: 0.9;
 
   cursor: pointer;
 }
@@ -63,7 +61,10 @@ button {
 }
 
 #copy-icon {
-  color: #484747;
+  color: #070707;
+}
+#copy-icon-active {
+  opacity: 0.5;
 }
 
 #copy-icon:hover {
@@ -71,10 +72,24 @@ button {
 }
 
 #delete-icon {
-  color: #484747;
+  color: #070707;
 }
 
 #delete-icon:hover {
   color: #f14d4d;
   cursor: pointer;
+}
+
+#sort-icon {
+  color: #ffffff;
+  opacity: 0.5;
+}
+#sort-icon:hover {
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 1;
+}
+#sort-icon-active {
+  color: #ffffff;
+  opacity: 1;
 }
