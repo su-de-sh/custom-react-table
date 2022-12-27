@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
 
 const CustomTable = ({ column, data }) => {
+  const [myData, setMyData] = useState(data);
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
 
@@ -15,6 +16,24 @@ const CustomTable = ({ column, data }) => {
       setSort({ col: col, order: "asc" });
     }
   };
+
+  useEffect(() => {
+    if (sort.col) {
+      const sortedData = [...data].sort((a, b) => {
+        if (a[column[sort.col].indexTitle] < b[column[sort.col].indexTitle]) {
+          return sort.order === "asc" ? -1 : 1;
+        }
+        if (a[column[sort.col].indexTitle] > b[column[sort.col].indexTitle]) {
+          return sort.order === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+      setMyData(sortedData);
+    } else {
+      setMyData(data);
+    }
+    // eslint-disable-next-line
+  }, [sort]);
 
   const selectARow = (id) => {
     if (selectedRow.includes(id)) {
@@ -31,18 +50,6 @@ const CustomTable = ({ column, data }) => {
       setSelectedRow(data.map((item) => item.id));
     }
   };
-
-  if (sort.col) {
-    data = data.sort((a, b) => {
-      if (a[column[sort.col].indexTitle] < b[column[sort.col].indexTitle]) {
-        return sort.order === "asc" ? -1 : 1;
-      }
-      if (a[column[sort.col].indexTitle] > b[column[sort.col].indexTitle]) {
-        return sort.order === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
-  }
 
   return (
     <div>
@@ -89,7 +96,7 @@ const CustomTable = ({ column, data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {myData.map((item) => (
             <tr key={item.id}>
               {column.map((col) => {
                 if (col.indexTitle === "select") {
