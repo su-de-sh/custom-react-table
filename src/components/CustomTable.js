@@ -3,10 +3,11 @@ import "./CustomTable.css";
 import { Icon } from "@iconify/react";
 
 const CustomTable = ({ header, data }) => {
+  const noOfDataToDisplay = 12;
   const [myData, setMyData] = useState(data);
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
-  const [paginatedData, setPaginatedData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     if (sort.col) {
@@ -25,6 +26,15 @@ const CustomTable = ({ header, data }) => {
     }
     // eslint-disable-next-line
   }, [sort]);
+
+  useEffect(() => {
+    setMyData(
+      data.slice(
+        noOfDataToDisplay * (pageNumber - 1),
+        noOfDataToDisplay * pageNumber
+      )
+    );
+  }, [pageNumber]);
 
   const sortheader = (col) => {
     if (sort.col === col && sort.order === "asc") {
@@ -53,7 +63,7 @@ const CustomTable = ({ header, data }) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <table id="table">
         <thead style={{ position: "sticky", top: -1 }}>
           <tr>
@@ -111,6 +121,8 @@ const CustomTable = ({ header, data }) => {
                           selectARow(item.id);
                         }}
                       />
+                      {"  "}
+                      {item.id}.
                     </td>
                   );
                 } else if (col.indexTitle === "delete") {
@@ -127,6 +139,37 @@ const CustomTable = ({ header, data }) => {
           ))}
         </tbody>
       </table>
+      <div id="pagination">
+        <button
+          id={pageNumber === 1 ? "disabled-button" : "primary-button"}
+          onClick={() => {
+            if (pageNumber > 1) {
+              setPageNumber(pageNumber - 1);
+            }
+          }}
+          disabled={pageNumber === 1}
+        >
+          Prev
+        </button>
+        <span>
+          {pageNumber} of {Math.ceil(data.length / 16)}
+        </span>
+        <button
+          id={
+            pageNumber === Math.ceil(data.length / 16)
+              ? "disabled-button"
+              : "primary-button"
+          }
+          onClick={() => {
+            if (pageNumber < Math.ceil(data.length / 16)) {
+              setPageNumber(pageNumber + 1);
+            }
+          }}
+          disabled={pageNumber === Math.ceil(data.length / 16)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
