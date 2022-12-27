@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
 
-const CustomTable = ({ column, data }) => {
+const CustomTable = ({ header, data }) => {
   const [myData, setMyData] = useState(data);
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
+  const [paginatedData, setPaginatedData] = useState([]);
 
-  const sortColumn = (col) => {
+  const sortheader = (col) => {
     if (sort.col === col && sort.order === "asc") {
       setSort({ col: col, order: "desc" });
     } else if (sort.col === col && sort.order === "desc") {
@@ -20,10 +21,10 @@ const CustomTable = ({ column, data }) => {
   useEffect(() => {
     if (sort.col) {
       const sortedData = [...data].sort((a, b) => {
-        if (a[column[sort.col].indexTitle] < b[column[sort.col].indexTitle]) {
+        if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
           return sort.order === "asc" ? -1 : 1;
         }
-        if (a[column[sort.col].indexTitle] > b[column[sort.col].indexTitle]) {
+        if (a[header[sort.col].indexTitle] > b[header[sort.col].indexTitle]) {
           return sort.order === "asc" ? 1 : -1;
         }
         return 0;
@@ -54,9 +55,9 @@ const CustomTable = ({ column, data }) => {
   return (
     <div>
       <table id="table">
-        <thead style={{ position: "-webkit-sticky", top: -1 }}>
+        <thead style={{ position: "sticky", top: -1 }}>
           <tr>
-            {column.map((item) => {
+            {header.map((item) => {
               if (item.indexTitle === "select") {
                 return (
                   <th key={item.id}>
@@ -86,7 +87,7 @@ const CustomTable = ({ column, data }) => {
                             : "mdi:sort"
                         }
                         width={20}
-                        onClick={() => sortColumn(item.id)}
+                        onClick={() => sortheader(item.id)}
                       />
                     </div>
                   </th>
@@ -98,7 +99,7 @@ const CustomTable = ({ column, data }) => {
         <tbody>
           {myData.map((item) => (
             <tr key={item.id}>
-              {column.map((col) => {
+              {header.map((col) => {
                 if (col.indexTitle === "select") {
                   return (
                     <td key={col.id}>

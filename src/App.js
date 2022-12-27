@@ -12,7 +12,7 @@ const App = () => {
     <div>
       My users
       <hr />
-      <CustomTable column={column} data={data} />
+      <CustomTable header={column} data={data} />
     </div>
   );
 };
