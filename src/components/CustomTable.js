@@ -8,16 +8,6 @@ const CustomTable = ({ header, data }) => {
   const [selectedRow, setSelectedRow] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
 
-  const sortheader = (col) => {
-    if (sort.col === col && sort.order === "asc") {
-      setSort({ col: col, order: "desc" });
-    } else if (sort.col === col && sort.order === "desc") {
-      setSort({ col: null, order: null });
-    } else {
-      setSort({ col: col, order: "asc" });
-    }
-  };
-
   useEffect(() => {
     if (sort.col) {
       const sortedData = [...data].sort((a, b) => {
@@ -35,6 +25,16 @@ const CustomTable = ({ header, data }) => {
     }
     // eslint-disable-next-line
   }, [sort]);
+
+  const sortheader = (col) => {
+    if (sort.col === col && sort.order === "asc") {
+      setSort({ col: col, order: "desc" });
+    } else if (sort.col === col && sort.order === "desc") {
+      setSort({ col: null, order: null });
+    } else {
+      setSort({ col: col, order: "asc" });
+    }
+  };
 
   const selectARow = (id) => {
     if (selectedRow.includes(id)) {
