@@ -61,3 +61,11 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
 }
+
+#copy-icon {
+  margin-left: 10px;
+}
+
+#copy-icon:hover {
+  cursor: pointer;
+}

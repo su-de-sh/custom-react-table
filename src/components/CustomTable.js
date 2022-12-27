@@ -9,6 +9,7 @@ const CustomTable = ({ header, data }) => {
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [hoverLocation, setHoverLocation] = useState({ row: null, col: null });
 
   useEffect(() => {
     if (sort.col) {
@@ -77,6 +78,10 @@ const CustomTable = ({ header, data }) => {
         noOfDataToDisplay * pageNumber
       )
     );
+  };
+
+  const handleMouseOver = (row, col) => {
+    setHoverLocation({ row: row, col: col });
   };
 
   return (
@@ -153,7 +158,35 @@ const CustomTable = ({ header, data }) => {
                     </td>
                   );
                 } else {
-                  return <td key={col.id}>{item[col.indexTitle]}</td>;
+                  return (
+                    <td
+                      key={col.id}
+                      onMouseOver={() => handleMouseOver(item.id, col.id)}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        {item[col.indexTitle]}
+                        {hoverLocation.row === item.id &&
+                          hoverLocation.col === col.id && (
+                            <Icon
+                              icon="material-symbols:file-copy"
+                              width="24"
+                              id="copy-icon"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  item[col.indexTitle]
+                                );
+                              }}
+                            />
+                          )}
+                      </div>
+                    </td>
+                  );
                 }
               })}
             </tr>
