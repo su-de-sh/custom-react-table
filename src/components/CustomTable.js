@@ -4,31 +4,27 @@ import { Icon } from "@iconify/react";
 
 const CustomTable = ({ header, data }) => {
   const noOfDataToDisplay = 12;
-  const [myData, setMyData] = useState(data);
+  const [allData, setAllData] = useState(data);
+  const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
   const [selectedRow, setSelectedRow] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     if (sort.col) {
-      const sortedData = [...data]
-        .slice(
-          noOfDataToDisplay * (pageNumber - 1),
-          noOfDataToDisplay * pageNumber
-        )
-        .sort((a, b) => {
-          if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
-            return sort.order === "asc" ? -1 : 1;
-          }
-          if (a[header[sort.col].indexTitle] > b[header[sort.col].indexTitle]) {
-            return sort.order === "asc" ? 1 : -1;
-          }
-          return 0;
-        });
-      setMyData(sortedData);
+      const sortedData = dataToDispaly.sort((a, b) => {
+        if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
+          return sort.order === "asc" ? -1 : 1;
+        }
+        if (a[header[sort.col].indexTitle] > b[header[sort.col].indexTitle]) {
+          return sort.order === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+      setDataToDisplay(sortedData);
     } else {
-      setMyData(
-        data.slice(
+      setDataToDisplay(
+        allData.slice(
           noOfDataToDisplay * (pageNumber - 1),
           noOfDataToDisplay * pageNumber
         )
@@ -38,8 +34,8 @@ const CustomTable = ({ header, data }) => {
   }, [sort]);
 
   useEffect(() => {
-    setMyData(
-      data.slice(
+    setDataToDisplay(
+      allData.slice(
         noOfDataToDisplay * (pageNumber - 1),
         noOfDataToDisplay * pageNumber
       )
@@ -70,6 +66,17 @@ const CustomTable = ({ header, data }) => {
     } else {
       setSelectedRow(data.map((item) => item.id));
     }
+  };
+
+  const handleDelete = (id) => {
+    const newData = allData.filter((item) => item.id !== id);
+    setAllData(newData);
+    setDataToDisplay(
+      newData.slice(
+        noOfDataToDisplay * (pageNumber - 1),
+        noOfDataToDisplay * pageNumber
+      )
+    );
   };
 
   return (
@@ -117,7 +124,7 @@ const CustomTable = ({ header, data }) => {
           </tr>
         </thead>
         <tbody>
-          {myData.map((item) => (
+          {dataToDispaly.map((item) => (
             <tr key={item.id}>
               {header.map((col) => {
                 if (col.indexTitle === "select") {
@@ -138,7 +145,11 @@ const CustomTable = ({ header, data }) => {
                 } else if (col.indexTitle === "delete") {
                   return (
                     <td key={col.id}>
-                      <Icon icon="ic:outline-delete-outline" width="28" />
+                      <Icon
+                        icon="ic:outline-delete-outline"
+                        width="28"
+                        onClick={() => handleDelete(item.id)}
+                      />
                     </td>
                   );
                 } else {
