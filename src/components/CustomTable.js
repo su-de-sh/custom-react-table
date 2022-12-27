@@ -191,8 +191,12 @@ const CustomTable = ({ header, data }) => {
                               id={
                                 isMouseDown ? "copy-icon-active" : "copy-icon"
                               }
-                              onMouseDown={() => setIsMouseDown(true)}
-                              onMouseUp={() => setIsMouseDown(false)}
+                              onMouseDown={() => {
+                                setIsMouseDown(true);
+                                setTimeout(() => {
+                                  setIsMouseDown(false);
+                                }, 200);
+                              }}
                               onClick={() => {
                                 navigator.clipboard.writeText(
                                   item[col.indexTitle]
