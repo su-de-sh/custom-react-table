@@ -6,6 +6,7 @@ import SnackBar from "./snackbar/SnackBar";
 import Search from "./search/Search";
 
 const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
+  // STATES
   const [allData, setAllData] = useState(data);
   const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
@@ -16,6 +17,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
 
+  // SIDE EFFECTS
   useEffect(() => {
     if (sort.col) {
       const sortedData = [...dataToDispaly].sort((a, b) => {
@@ -68,6 +70,8 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
     // eslint-disable-next-line
   }, [pageNumber]);
 
+  // FUNCTIONS
+
   const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
       setSort({ col: col, order: "desc" });
@@ -94,7 +98,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
     }
   };
 
-  const handleDelete = (id) => {
+  const handleRowDelete = (id) => {
     addMessage("Row deleted successfully");
     const newData = allData.filter((item) => item.id !== id);
     setAllData(newData);
@@ -121,6 +125,8 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
       setMessage("");
     }, 2000);
   };
+
+  // RETURN
 
   return (
     <div className="container">
@@ -196,7 +202,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
                         id="delete-icon"
                         onClick={() => {
                           window.confirm("Are you sure you want to delete?") &&
-                            handleDelete(item.id);
+                            handleRowDelete(item.id);
                         }}
                       />
                     </td>
