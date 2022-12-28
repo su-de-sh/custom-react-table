@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import CustomTable from "./components/CustomTable";
+import CustomTable from "./components/custom-table/CustomTable";
 import { COLUMNS } from "./columns";
 import INFO_DATA from "./INFO_DATA.json";
 import "./App.css";
@@ -10,8 +10,6 @@ const App = () => {
 
   return (
     <div>
-      My users
-      <hr />
       <CustomTable header={column} data={data} />
     </div>
   );

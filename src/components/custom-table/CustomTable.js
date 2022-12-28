@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
-import Pagination from "./Pagination";
+import Pagination from "../pagination/Pagination";
+import SnackBar from "../snackbar/SnackBar";
 
 const CustomTable = ({ header, data }) => {
-  const noOfDataToDisplay = 12;
+  const noOfDataToDisplay = 14;
   const [allData, setAllData] = useState(data);
   const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
@@ -12,6 +13,7 @@ const CustomTable = ({ header, data }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [hoverLocation, setHoverLocation] = useState({ row: null, col: null });
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (sort.col) {
@@ -45,6 +47,12 @@ const CustomTable = ({ header, data }) => {
     );
     // eslint-disable-next-line
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (selectedRow.length) {
+      addMessage(`Selected ${selectedRow.length} row(s)`);
+    }
+  }, [selectedRow]);
 
   const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
@@ -87,6 +95,13 @@ const CustomTable = ({ header, data }) => {
     setHoverLocation({ row: row, col: col });
   };
 
+  const addMessage = (message) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  };
+
   return (
     <div className="container">
       <table id="table">
@@ -104,13 +119,7 @@ const CustomTable = ({ header, data }) => {
               } else {
                 return (
                   <th key={item.id}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
+                    <div id="flex-container">
                       {item.title}
 
                       <Icon
@@ -164,7 +173,10 @@ const CustomTable = ({ header, data }) => {
                         icon="ic:outline-delete-outline"
                         width="28"
                         id="delete-icon"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => {
+                          addMessage("Row deleted successfully");
+                          handleDelete(item.id);
+                        }}
                       />
                     </td>
                   );
@@ -175,13 +187,7 @@ const CustomTable = ({ header, data }) => {
                       onMouseOver={() => handleMouseOver(item.id, col.id)}
                       onMouseOut={() => handleMouseOver(null, null)}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
+                      <div id="flex-container">
                         {item[col.indexTitle]}
                         {hoverLocation.row === item.id &&
                           hoverLocation.col === col.id && (
@@ -198,6 +204,7 @@ const CustomTable = ({ header, data }) => {
                                 }, 200);
                               }}
                               onClick={() => {
+                                addMessage("Copied to clipboard");
                                 navigator.clipboard.writeText(
                                   item[col.indexTitle]
                                 );
@@ -217,7 +224,9 @@ const CustomTable = ({ header, data }) => {
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
         data={data}
+        noOfDataToDisplay={noOfDataToDisplay}
       />
+      {message ? <SnackBar message={message} /> : null}
     </div>
   );
 };

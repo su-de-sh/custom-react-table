@@ -32,15 +32,18 @@
   color: white;
 }
 
-#pagination {
-  margin-top: 20px;
-}
-
 button {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#primary-button {
+#flex-container {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primary-button {
   background-color: #050505;
   color: white;
   margin: 2px 2px 2px 2px;
@@ -48,13 +51,13 @@ button {
   border-radius: 5px;
 }
 
-#primary-button:hover {
+.primary-button:hover {
   opacity: 0.9;
 
   cursor: pointer;
 }
 
-#disabled-button {
+.disabled-button {
   margin: 2px 2px 2px 2px;
   padding: 10px 20px;
   border-radius: 5px;
