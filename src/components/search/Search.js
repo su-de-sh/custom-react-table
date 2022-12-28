@@ -1,10 +1,18 @@
 import React from "react";
 import "./Search.css";
 
-const Search = () => {
+const Search = ({ search, setSearch }) => {
   return (
-    <div className="search-bar-container">
-      <input type="text" placeholder="Search" />
+    <div className="search-container">
+      <input
+        className="search-input search-icon"
+        type="text"
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+        placeholder="Search"
+      />
     </div>
   );
 };

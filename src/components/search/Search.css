@@ -1,10 +1,19 @@
-#search-bar {
+.search-container {
   display: flex;
   justify-content: flex-end;
-  flex-wrap: wrap;
+}
 
-  /* border: 1px solid #050505;
-  border-radius: 5px;
+.search-input {
+  height: 30px;
+  border: 2px solid #050505;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 16px;
+}
 
-  font-size: 16px; */
+.search-icon {
+  padding-left: 25px;
+  background: url("https://static.thenounproject.com/png/101791-200.png")
+    no-repeat left;
+  background-size: 20px;
 }

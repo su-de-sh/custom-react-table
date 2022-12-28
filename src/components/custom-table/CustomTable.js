@@ -37,8 +37,26 @@ const CustomTable = ({ header, data }) => {
         )
       );
     }
+
+    if (selectedRow.length) {
+      addMessage(`Selected ${selectedRow.length} row(s)`);
+    }
+
+    if (search) {
+      const newData = allData.filter((item) => {
+        for (let key in item) {
+          if (
+            key !== "id" &&
+            item[key].toLowerCase().includes(search.toLowerCase())
+          ) {
+            return true;
+          }
+        }
+      });
+      setDataToDisplay(newData);
+    }
     // eslint-disable-next-line
-  }, [sort]);
+  }, [sort, selectedRow, search]);
 
   useEffect(() => {
     setDataToDisplay(
@@ -49,12 +67,6 @@ const CustomTable = ({ header, data }) => {
     );
     // eslint-disable-next-line
   }, [pageNumber]);
-
-  useEffect(() => {
-    if (selectedRow.length) {
-      addMessage(`Selected ${selectedRow.length} row(s)`);
-    }
-  }, [selectedRow]);
 
   const sortColumn = (col) => {
     if (sort.col === col && sort.order === "asc") {
