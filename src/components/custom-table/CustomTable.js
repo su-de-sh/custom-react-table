@@ -106,8 +106,13 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
     );
   };
 
-  const handleMouseOver = (row, col) => {
-    setHoverLocation({ row: row, col: col });
+  const handleCopyData = (item, col) => {
+    setIsMouseDown(true);
+    setTimeout(() => {
+      setIsMouseDown(false);
+    }, 200);
+    addMessage("Copied to clipboard");
+    navigator.clipboard.writeText(item[col.indexTitle]);
   };
 
   const addMessage = (message) => {
@@ -200,8 +205,12 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
                   return (
                     <td
                       key={col.id}
-                      onMouseOver={() => handleMouseOver(item.id, col.id)}
-                      onMouseOut={() => handleMouseOver(null, null)}
+                      onMouseOver={() =>
+                        setHoverLocation({ row: item.id, col: col.id })
+                      }
+                      onMouseOut={() =>
+                        setHoverLocation({ row: null, col: null })
+                      }
                     >
                       <div className="flex-container">
                         {item[col.indexTitle]}
@@ -213,16 +222,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
                               id={
                                 isMouseDown ? "copy-icon-active" : "copy-icon"
                               }
-                              onClick={() => {
-                                setIsMouseDown(true);
-                                setTimeout(() => {
-                                  setIsMouseDown(false);
-                                }, 200);
-                                addMessage("Copied to clipboard");
-                                navigator.clipboard.writeText(
-                                  item[col.indexTitle]
-                                );
-                              }}
+                              onClick={() => handleCopyData(item, col)}
                             />
                           )}
                       </div>
