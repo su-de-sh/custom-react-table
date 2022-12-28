@@ -5,8 +5,7 @@ import Pagination from "../pagination/Pagination";
 import SnackBar from "../snackbar/SnackBar";
 import Search from "../search/Search";
 
-const CustomTable = ({ header, data }) => {
-  const noOfDataInAPage = 12;
+const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
   const [allData, setAllData] = useState(data);
   const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
