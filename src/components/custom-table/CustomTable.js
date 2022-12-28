@@ -95,6 +95,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
   };
 
   const handleDelete = (id) => {
+    addMessage("Row deleted successfully");
     const newData = allData.filter((item) => item.id !== id);
     setAllData(newData);
     setDataToDisplay(
@@ -189,7 +190,6 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
                         width="28"
                         id="delete-icon"
                         onClick={() => {
-                          addMessage("Row deleted successfully");
                           window.confirm("Are you sure you want to delete?") &&
                             handleDelete(item.id);
                         }}
