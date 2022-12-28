@@ -19,7 +19,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
 
   // SIDE EFFECTS
   useEffect(() => {
-    if (sort.col) {
+    if (sort.col !== null) {
       const sortedData = [...dataToDispaly].sort((a, b) => {
         if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
           return sort.order === "asc" ? -1 : 1;
@@ -135,17 +135,37 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
         <thead style={{ position: "sticky", top: -1 }}>
           <tr>
             {header.map((item) => {
-              if (item.indexTitle === "select") {
+              if (item.indexTitle === "id") {
                 return (
                   <th key={item.id}>
-                    <input
-                      type="checkbox"
-                      checked={
-                        selectedRow.length === data.length ? true : false
-                      }
-                      onChange={selectAllRow}
-                    />{" "}
-                    ID.
+                    <div className="flex-container">
+                      <input
+                        type="checkbox"
+                        checked={
+                          selectedRow.length === data.length ? true : false
+                        }
+                        onChange={selectAllRow}
+                      />
+                      {item.title}
+                      <Icon
+                        id={
+                          sort.col && sort.col === item.id
+                            ? "sort-icon-active"
+                            : "sort-icon"
+                        }
+                        icon={
+                          sort.col === item.id
+                            ? sort.order === "asc"
+                              ? "mdi:sort-descending"
+                              : "mdi:sort-ascending"
+                            : "mdi:sort"
+                        }
+                        width={20}
+                        onClick={() => {
+                          sortColumn(item.id);
+                        }}
+                      />
+                    </div>
                   </th>
                 );
               } else if (item.indexTitle === "delete") {
@@ -185,7 +205,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
           {dataToDispaly.map((item) => (
             <tr key={item.id}>
               {header.map((col) => {
-                if (col.indexTitle === "select") {
+                if (col.indexTitle === "id") {
                   return (
                     <td key={col.id}>
                       {" "}

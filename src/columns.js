@@ -1,7 +1,7 @@
 export const COLUMNS = [
   {
-    title: "Select",
-    indexTitle: "select",
+    title: "ID.",
+    indexTitle: "id",
     id: 0,
   },
 
