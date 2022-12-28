@@ -20,7 +20,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
   // SIDE EFFECTS
   useEffect(() => {
     if (sort.col !== null) {
-      const sortedData = [...dataToDispaly].sort((a, b) => {
+      const sortedData = [...allData].sort((a, b) => {
         if (a[header[sort.col].indexTitle] < b[header[sort.col].indexTitle]) {
           return sort.order === "asc" ? -1 : 1;
         }
@@ -29,14 +29,9 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
         }
         return 0;
       });
-      setDataToDisplay(sortedData);
+      setAllData(sortedData);
     } else {
-      setDataToDisplay(
-        allData.slice(
-          noOfDataInAPage * (pageNumber - 1),
-          noOfDataInAPage * pageNumber
-        )
-      );
+      setAllData(data);
     }
 
     if (selectedRow.length) {
@@ -55,6 +50,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
         }
         return false;
       });
+
       setDataToDisplay(newData);
     }
     // eslint-disable-next-line
@@ -68,7 +64,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
       )
     );
     // eslint-disable-next-line
-  }, [pageNumber]);
+  }, [pageNumber, allData]);
 
   // FUNCTIONS
 
@@ -267,14 +263,14 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
           ))}
         </tbody>
       </table>
-      {search ? null : (
-        <Pagination
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          data={data}
-          noOfDataInAPage={noOfDataInAPage}
-        />
-      )}
+
+      <Pagination
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        data={data}
+        noOfDataInAPage={noOfDataInAPage}
+      />
+
       {message ? <SnackBar message={message} /> : null}
     </div>
   );
