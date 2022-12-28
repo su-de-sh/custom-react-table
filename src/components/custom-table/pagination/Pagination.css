@@ -1,4 +1,4 @@
-#pagination {
+.pagination {
   position: fixed;
   bottom: 30px;
   left: 42%;
@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-#page-number {
+.page-number {
   margin: 20px;
   font-size: 20px;
   font-weight: bold;

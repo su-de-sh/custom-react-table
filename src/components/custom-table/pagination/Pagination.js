@@ -3,7 +3,7 @@ import "./Pagination.css";
 
 const Pagination = ({ pageNumber, setPageNumber, data, noOfDataInAPage }) => {
   return (
-    <div id="pagination">
+    <div className="pagination">
       <button
         className={pageNumber === 1 ? "disabled-button" : "primary-button"}
         onClick={() => {
@@ -15,7 +15,7 @@ const Pagination = ({ pageNumber, setPageNumber, data, noOfDataInAPage }) => {
       >
         Prev
       </button>
-      <span id="page-number">
+      <span className="page-number">
         {pageNumber} of {Math.ceil(data.length / noOfDataInAPage)}
       </span>
       <button
