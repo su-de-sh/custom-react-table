@@ -15,7 +15,7 @@ const Pagination = ({ pageNumber, setPageNumber, data, noOfDataToDisplay }) => {
       >
         Prev
       </button>
-      <span>
+      <span id="page-number">
         {pageNumber} of {Math.ceil(data.length / noOfDataToDisplay)}
       </span>
       <button

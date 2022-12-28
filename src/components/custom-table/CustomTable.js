@@ -3,6 +3,7 @@ import "./CustomTable.css";
 import { Icon } from "@iconify/react";
 import Pagination from "../pagination/Pagination";
 import SnackBar from "../snackbar/SnackBar";
+import Search from "../search/Search";
 
 const CustomTable = ({ header, data }) => {
   const noOfDataToDisplay = 14;
@@ -14,6 +15,7 @@ const CustomTable = ({ header, data }) => {
   const [hoverLocation, setHoverLocation] = useState({ row: null, col: null });
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [message, setMessage] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (sort.col) {
@@ -104,6 +106,7 @@ const CustomTable = ({ header, data }) => {
 
   return (
     <div className="container">
+      <Search />
       <table id="table">
         <thead style={{ position: "sticky", top: -1 }}>
           <tr>
@@ -119,7 +122,7 @@ const CustomTable = ({ header, data }) => {
               } else {
                 return (
                   <th key={item.id}>
-                    <div id="flex-container">
+                    <div className="flex-container">
                       {item.title}
 
                       <Icon
