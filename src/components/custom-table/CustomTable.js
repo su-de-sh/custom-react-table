@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./CustomTable.css";
 import { Icon } from "@iconify/react";
-import Pagination from "../pagination/Pagination";
-import SnackBar from "../snackbar/SnackBar";
-import Search from "../search/Search";
+import Pagination from "./pagination/Pagination";
+import SnackBar from "./snackbar/SnackBar";
+import Search from "./search/Search";
 
 const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
   const [allData, setAllData] = useState(data);
