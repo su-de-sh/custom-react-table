@@ -127,7 +127,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
               if (item.indexTitle === "select") {
                 return (
                   <th key={item.id}>
-                    <input type="checkbox" onChange={selectAllRow} />
+                    <input type="checkbox" onChange={selectAllRow} /> ID.
                   </th>
                 );
               } else if (item.indexTitle === "delete") {
