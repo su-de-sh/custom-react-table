@@ -106,7 +106,7 @@ const CustomTable = ({ header, data }) => {
 
   return (
     <div className="container">
-      <Search />
+      <Search search={search} setSearch={setSearch} />
       <table id="table">
         <thead style={{ position: "sticky", top: -1 }}>
           <tr>
@@ -178,7 +178,8 @@ const CustomTable = ({ header, data }) => {
                         id="delete-icon"
                         onClick={() => {
                           addMessage("Row deleted successfully");
-                          handleDelete(item.id);
+                          window.confirm("Are you sure you want to delete?") &&
+                            handleDelete(item.id);
                         }}
                       />
                     </td>
@@ -190,7 +191,7 @@ const CustomTable = ({ header, data }) => {
                       onMouseOver={() => handleMouseOver(item.id, col.id)}
                       onMouseOut={() => handleMouseOver(null, null)}
                     >
-                      <div id="flex-container">
+                      <div className="flex-container">
                         {item[col.indexTitle]}
                         {hoverLocation.row === item.id &&
                           hoverLocation.col === col.id && (
@@ -200,13 +201,11 @@ const CustomTable = ({ header, data }) => {
                               id={
                                 isMouseDown ? "copy-icon-active" : "copy-icon"
                               }
-                              onMouseDown={() => {
+                              onClick={() => {
                                 setIsMouseDown(true);
                                 setTimeout(() => {
                                   setIsMouseDown(false);
                                 }, 200);
-                              }}
-                              onClick={() => {
                                 addMessage("Copied to clipboard");
                                 navigator.clipboard.writeText(
                                   item[col.indexTitle]
