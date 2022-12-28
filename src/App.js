@@ -9,7 +9,7 @@ const App = () => {
   const data = useMemo(() => INFO_DATA, []);
 
   return (
-    <div>
+    <div className="app-container">
       <CustomTable header={column} data={data} />
     </div>
   );
