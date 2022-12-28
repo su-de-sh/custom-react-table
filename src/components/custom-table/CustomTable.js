@@ -6,7 +6,7 @@ import SnackBar from "../snackbar/SnackBar";
 import Search from "../search/Search";
 
 const CustomTable = ({ header, data }) => {
-  const noOfDataToDisplay = 12;
+  const noOfDataInAPage = 12;
   const [allData, setAllData] = useState(data);
   const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
@@ -32,8 +32,8 @@ const CustomTable = ({ header, data }) => {
     } else {
       setDataToDisplay(
         allData.slice(
-          noOfDataToDisplay * (pageNumber - 1),
-          noOfDataToDisplay * pageNumber
+          noOfDataInAPage * (pageNumber - 1),
+          noOfDataInAPage * pageNumber
         )
       );
     }
@@ -61,8 +61,8 @@ const CustomTable = ({ header, data }) => {
   useEffect(() => {
     setDataToDisplay(
       allData.slice(
-        noOfDataToDisplay * (pageNumber - 1),
-        noOfDataToDisplay * pageNumber
+        noOfDataInAPage * (pageNumber - 1),
+        noOfDataInAPage * pageNumber
       )
     );
     // eslint-disable-next-line
@@ -99,8 +99,8 @@ const CustomTable = ({ header, data }) => {
     setAllData(newData);
     setDataToDisplay(
       newData.slice(
-        noOfDataToDisplay * (pageNumber - 1),
-        noOfDataToDisplay * pageNumber
+        noOfDataInAPage * (pageNumber - 1),
+        noOfDataInAPage * pageNumber
       )
     );
   };
@@ -238,7 +238,7 @@ const CustomTable = ({ header, data }) => {
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
         data={data}
-        noOfDataToDisplay={noOfDataToDisplay}
+        noOfDataInAPage={noOfDataInAPage}
       />
       {message ? <SnackBar message={message} /> : null}
     </div>
