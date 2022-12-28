@@ -1,3 +1,18 @@
+# Custom-React-Table-Component
+
+In this project i have made a custom table component on react. You just need to provide the data in array of objects formant and a header. Optionally you can provide no of data to show in single page. This table has the features like pagination, search, selecting rows, sorting a column, copying a cell data and deleting a row. Besides this table component also shows toast message when deleting and selecting rows and also when copying a cell data for better user experice.
+
+# Technology stack used
+
+This custom-react-table component is made on react. Iconify is used for icons. Mock data is prepared from Mocaroo.com. For styling basic css is used.
+
+# Run the project on your device
+
+```
+npm install
+npm start
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

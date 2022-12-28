@@ -51,6 +51,7 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
             return true;
           }
         }
+        return false;
       });
       setDataToDisplay(newData);
     }
