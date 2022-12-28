@@ -6,7 +6,7 @@ import SnackBar from "../snackbar/SnackBar";
 import Search from "../search/Search";
 
 const CustomTable = ({ header, data }) => {
-  const noOfDataToDisplay = 14;
+  const noOfDataToDisplay = 12;
   const [allData, setAllData] = useState(data);
   const [dataToDispaly, setDataToDisplay] = useState([]);
   const [sort, setSort] = useState({ col: null, order: null });
