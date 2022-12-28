@@ -234,12 +234,14 @@ const CustomTable = ({ header, data, noOfDataInAPage = 12 }) => {
           ))}
         </tbody>
       </table>
-      <Pagination
-        pageNumber={pageNumber}
-        setPageNumber={setPageNumber}
-        data={data}
-        noOfDataInAPage={noOfDataInAPage}
-      />
+      {search ? null : (
+        <Pagination
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          data={data}
+          noOfDataInAPage={noOfDataInAPage}
+        />
+      )}
       {message ? <SnackBar message={message} /> : null}
     </div>
   );
